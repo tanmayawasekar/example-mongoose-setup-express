@@ -1,7 +1,8 @@
 //Bring in the mongoose module
 const mongoose = require('mongoose');
 
-const dbURI = "mongodb://localhost:27017/kitch-display-ordering";
+// const dbURI = "mongodb://localhost:27017/kitch-display-ordering";
+const dbURI = "mongodb://tanmayawasekar:7825tanmay@ds117156.mlab.com:17156/gameofthronesbattle";
 
 //console to check what is the dbURI refers to
 console.log("Database URL is =>>", dbURI);
