@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  .main.container
+    .row
+      .col-md-6.col-md-offset-3
+        h1.display-4.m-b-2 New Order
+
+        form(method='POST' action='/order/new')
+          div.form-group
+            label(for='dish') Dish:
+            input#dish.form-control(type='text', placeholder='Dish Name' name='dish')
+          div.form-group
+            label(for='quantity') Quantity:
+            input#quantity.form-control(type='number', placeholder='number' name='quantity')
+          button.btn.btn-primary(type='submit') Sumit

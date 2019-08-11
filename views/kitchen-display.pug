@@ -1,0 +1,20 @@
+extends layout
+block content
+  .main.container
+        table(class="table table-striped", border=1)
+            tr
+                th Name
+                th Quantity
+                th Created-till-now
+                th Predicted
+                th Status
+            each value, index in finalResult
+                tr
+                    td #{value.name}
+                    td #{value.dishQuantity}
+                    td #{value.createdTillNow}
+                    td #{value.prediction}
+                    if value.showDoneButton
+                        td <input type="button" value="DONE" class="mark-complete" id=#{value._id}>
+                    else
+                        td ORDER COMPLETED

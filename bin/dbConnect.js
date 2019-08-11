@@ -2,10 +2,11 @@
 const mongoose = require('mongoose');
 
 const dbURI = "mongodb://localhost:27017/kitch-display-ordering";
-console.log("dbURI ", dbURI);
 
 //console to check what is the dbURI refers to
 console.log("Database URL is =>>", dbURI);
+
+mongoose.Promise = Promise;
 
 //Open the mongoose connection to the database
 mongoose.connect(dbURI, {
@@ -14,6 +15,8 @@ mongoose.connect(dbURI, {
   },
   useNewUrlParser: true
 });
+
+mongoose.set('useFindAndModify', false);
 
 // Db Connection
 const db = mongoose.connection;
