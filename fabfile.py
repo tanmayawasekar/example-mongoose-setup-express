@@ -18,8 +18,8 @@ def deploy():
         # _update_database()
 
 def _build_docker_image():
-    run("docker build -t tanmayawasekar/kitchen-display-ordering .")
-    run("docker run -p 49160:8080 -d tanmayawasekar/node-web-app")
+    run("sudo docker build -t tanmayawasekar/kitchen-display-ordering .")
+    run("sudo docker run -p 49160:8080 -d tanmayawasekar/kitchen-display-ordering")
 
 
 def _get_latest_source():
