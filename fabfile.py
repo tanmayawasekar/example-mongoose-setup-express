@@ -19,7 +19,7 @@ def deploy():
 
 def _build_docker_image():
     run("sudo docker build -t tanmayawasekar/kitchen-display-ordering .")
-    run("sudo docker run -p 49160:8080 -d tanmayawasekar/kitchen-display-ordering")
+    run("sudo docker run -p 3000:3000 -d tanmayawasekar/kitchen-display-ordering")
 
 
 def _get_latest_source():
