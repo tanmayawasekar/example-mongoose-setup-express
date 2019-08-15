@@ -11,15 +11,23 @@ def deploy():
     with cd(site_folder):  
         _install_docker()
         _get_latest_source()
+        _remove_existing_images_containers()
         _build_docker_image()
-        # _update_virtualenv()
-        # _create_or_update_dotenv()
-        # _update_static_files()
-        # _update_database()
+
+def _remove_existing_images_containers():
+    output = run("docker ps -q")
+    if output.stdout:
+        run("docker kill "+" ".join(output.stdout.split("\r\n")))
+    output = run("docker ps -a -q")
+    if(output.stdout):
+        run("docker rm " + " ".join(output.stdout.split("\r\n")))
+    output = run("docker images -q")
+    if(output.stdout):
+        run("docker rmi "+" ".join(output.stdout.split("\r\n")))
 
 def _build_docker_image():
-    run("sudo docker build -t tanmayawasekar/kitchen-display-ordering .")
-    run("sudo docker run -p 3000:3000 -d tanmayawasekar/kitchen-display-ordering")
+    run("docker build -t tanmayawasekar/kitchen-display-ordering .")
+    run("docker run -p 80:3000 -d tanmayawasekar/kitchen-display-ordering")
 
 
 def _get_latest_source():
