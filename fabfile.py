@@ -10,9 +10,19 @@ def deploy():
     run(f'mkdir -p {site_folder}')  
     with cd(site_folder):  
         _install_docker()
+        _install_docker_compose()
         _get_latest_source()
         _remove_existing_images_containers()
         _build_docker_image()
+
+def _install_docker_compose():
+    with settings(warn_only=True):
+        output = run("docker-compose --version")
+        if output.failed:
+            run("sudo curl -L https://github.com/docker/compose/releases/download/1.21.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose")
+            run('sudo chmod +x /usr/local/bin/docker-compose')
+            run('docker-compose --version')
+
 
 def _remove_existing_images_containers():
     output = run("docker ps -q")
@@ -37,15 +47,13 @@ def _get_latest_source():
         run(f'git clone {REPO_URL} .')  
     
 def _install_docker():
-    output = local('docker -v', capture=True)
-    match = re.search(r'build', output)
-    if match and 'build' in match.group(0).lower():
-        pass
-    else:
-        run('curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -')
-        run('sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"')
-        run('sudo apt-get update')
-        run('sudo apt-get install -y docker-ce')
+    with settings(warn_only=True):
+        output = run("docker --version")
+        if output.failed:
+            run('curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -')
+            run('sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"')
+            run('sudo apt-get update')
+            run('sudo apt-get install -y docker-ce')
 
 def is_package_installed(pkgname):
     output = local('dpkg -s {}'.format(pkgname), capture=True)
