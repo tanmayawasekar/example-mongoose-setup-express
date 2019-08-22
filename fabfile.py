@@ -13,11 +13,11 @@ def deploy():
         _install_docker_compose()
         _get_latest_source()
         _remove_existing_images_containers()
-        # _build_docker_image()
         _docker_compose_up()
+        # _build_docker_image()
 
 def _docker_compose_up():
-    run("docker-compose up")
+    run("docker-compose up -d")
 
 def _install_docker_compose():
     with settings(warn_only=True):
